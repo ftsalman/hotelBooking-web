@@ -11,26 +11,27 @@ import StarRating from "./StarRating";
 export const RoomDetails = () => {
   const { id } = useParams();
 
-  const [rooms, setRooms] = useState(null);
+  const [roomsData, setRoomsData] = useState(null);
   const [mainImages, setMainImages] = useState(null);
 
   useEffect(() => {
-    const room = roomsDummyData.find((room) => room._id === id);
+    const rooms = roomsDummyData.find((room) => room._id === id);
 
-    room && setRooms(room);
-    room && setMainImages(room?.images[0]);
+    setRoomsData(rooms);
   }, []);
 
   return (
-    rooms && (
+    roomsData && (
       <>
         <div className=" py-28 md:py-36 px-4 md:px-16 lg:px-24 xl:px-32">
           {/* Room Details */}
 
           <div className=" flex items-center  gap-2">
             <h2 className=" text-3xl md:text-4xl font-semibold">
-              {rooms?.hotel?.name}{" "}
-              <span className=" font-normal text-sm">({rooms?.roomType})</span>
+              {roomsData?.hotel?.name}{" "}
+              <span className=" font-normal text-sm">
+                ({roomsData?.roomType})
+              </span>
             </h2>
             <p className=" py-0.5 px-2 bg-orange-400 font-semibold rounded-4xl text-white">
               20% OFF
@@ -46,7 +47,7 @@ export const RoomDetails = () => {
 
           <div className=" flex  items-center gap-1 text-gray-700 mt-2">
             <img src={assets.locationIcon} alt="" />
-            <span>{rooms?.hotel?.address}</span>
+            <span>{roomsData?.hotel?.address}</span>
           </div>
 
           {/* Image Sections  */}
@@ -61,8 +62,8 @@ export const RoomDetails = () => {
             </div>
 
             <div className=" grid  grid-cols-2 gap-2 lg:w-1/2 w-full">
-              {rooms?.images.length > 1 &&
-                rooms.images.map((image, index) => (
+              {roomsData?.images.length > 1 &&
+                roomsData.images.map((image, index) => (
                   <img
                     onClick={() => setMainImages(image)}
                     key={index}
@@ -83,7 +84,7 @@ export const RoomDetails = () => {
                 Experience Luxury Like Never Before
               </h1>
               <div className=" flex flex-wrap items-center mt-3 mb-6 gap-2">
-                {rooms.amenities.map((item, index) => (
+                {roomsData.amenities.map((item, index) => (
                   <div
                     key={index}
                     className=" flex  items-center gap-2 px-2 py-2 rounded-lg bg-gray-100"
@@ -100,7 +101,7 @@ export const RoomDetails = () => {
             </div>
             {/* Room Pricing */}
             <p className=" text-2xl font-medium">
-              ${rooms?.pricePerNight}/night
+              ${roomsData?.pricePerNight}/night
             </p>
           </div>
 
